@@ -15,3 +15,7 @@ for x in result:
 
 for n in list:
   print((lambda a: a * 2)(n))
+
+result = filter(lambda n: n % 2 == 0, list)
+for x in result:
+  print(x)
