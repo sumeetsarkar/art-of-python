@@ -1,25 +1,67 @@
 import json
 import psycopg2
 
-def get_connection_params():
-  fileR = open('./config/db-connection.json', 'rt')
+def get_connection_params(configFilePath):
+  """
+  Parameters
+  ----------
+  configFilePath : str
+    Path of the config file containing DB connection parameters
+    {
+      "db": "",
+      "user": "",
+      "password": "",
+    }
+  Returns
+  -------
+  str
+    database connection string
+  """
+  # read file
+  fileR = open(configFilePath, 'rt')
+  # parse json
   config = json.loads(fileR.read())
+  fileR.close()
+  # read keys from json config
   DB_NAME = config['db']
   USER = config['user']
   PASSWORD = config['password']
-  fileR.close()
+  # return connection string
   return 'dbname={0} user={1} password={2}'.format(DB_NAME, USER, PASSWORD)
 
+
 def connect_to_db(params):
+  """
+  Parameters
+  ----------
+  params : str
+    database connection string
+  Returns
+  -------
+  connection
+    database connection
+  """
   return psycopg2.connect(params)
 
+
 def print_db_version(cur):
+  """
+  Parameters
+  ----------
+  cur : cursor
+  """
   cur.execute('SELECT version()')
   dbVersion = cur.fetchone()
   print(dbVersion)
   cur.close()
 
+
 def execute_statements(cur):
+  """
+  Parameters
+  ----------
+  cur : cursor
+  """
   cur.execute('SELECT * FROM employee')
   rows = cur.fetchall()
   print('Number of results:', cur.rowcount)
@@ -27,9 +69,12 @@ def execute_statements(cur):
     print(row)
   cur.close()
 
+
 def init():
   try:
-    dbConn = connect_to_db(get_connection_params())
+    configFilePath = './config/db-connection.json'
+    connectionString = get_connection_params(configFilePath)
+    dbConn = connect_to_db(connectionString)
     print('Database connection opened...\n')
     print_db_version(dbConn.cursor())
     execute_statements(dbConn.cursor())
@@ -40,4 +85,6 @@ def init():
       dbConn.close()
       print('\nDatabase connection closed...')
 
+
+# start program
 init()
