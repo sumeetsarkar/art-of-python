@@ -41,6 +41,8 @@ print('person2.someData: ', person2.someData)
 # but accessing the class attribute using Class still shows original value
 print('Person.someData: ', Person.someData)
 
+Person.someData = 30
+print('Person.someData: ', Person.someData)
 # accessing instance variables using Class will cause error
 # print(Person.fname) AttributeError: class Person has no attribute 'fname'
 
