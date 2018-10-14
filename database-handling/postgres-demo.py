@@ -1,21 +1,18 @@
+import os
 import json
 import psycopg2
 
 def get_connection_params(configFilePath):
-  """
-  Parameters
-  ----------
-  configFilePath : str
-    Path of the config file containing DB connection parameters
+  """Gets database connection string, from reading config params
+  Parameters:
+    configFilePath (str): Path of the config file containing DB connection parameters
     {
       "db": "",
       "user": "",
       "password": "",
     }
-  Returns
-  -------
-  str
-    database connection string
+  Returns:
+    str: database connection string
   """
   # read file
   fileR = open(configFilePath, 'rt')
@@ -30,25 +27,20 @@ def get_connection_params(configFilePath):
   return 'dbname={0} user={1} password={2}'.format(DB_NAME, USER, PASSWORD)
 
 
-def connect_to_db(params):
+def connect_to_db(connString):
+  """Connects to postgres DB and returns connection
+  Parameters:
+    connString (str) database connection string
+  Returns:
+    connection :database connection
   """
-  Parameters
-  ----------
-  params : str
-    database connection string
-  Returns
-  -------
-  connection
-    database connection
-  """
-  return psycopg2.connect(params)
+  return psycopg2.connect(connString)
 
 
 def print_db_version(cur):
   """
-  Parameters
-  ----------
-  cur : cursor
+  Parameters:
+    cur (cursor):
   """
   cur.execute('SELECT version()')
   dbVersion = cur.fetchone()
@@ -56,11 +48,10 @@ def print_db_version(cur):
   cur.close()
 
 
-def execute_statements(cur):
+def print_all_employees(cur):
   """
-  Parameters
-  ----------
-  cur : cursor
+  Parameters:
+    cur (cursor):
   """
   cur.execute('SELECT * FROM employee')
   rows = cur.fetchall()
@@ -72,12 +63,13 @@ def execute_statements(cur):
 
 def init():
   try:
-    configFilePath = './config/db-connection.json'
+    dirName = os.path.dirname(__file__)
+    configFilePath = os.path.join(dirName, './config/db-connection.json')
     connectionString = get_connection_params(configFilePath)
     dbConn = connect_to_db(connectionString)
     print('Database connection opened...\n')
     print_db_version(dbConn.cursor())
-    execute_statements(dbConn.cursor())
+    print_all_employees(dbConn.cursor())
   except (Exception, psycopg2.DatabaseError) as error:
     print(error)
   finally:
