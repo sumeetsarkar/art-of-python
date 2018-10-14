@@ -19,3 +19,5 @@ for n in list:
 result = filter(lambda n: n % 2 == 0, list)
 for x in result:
   print(x)
+
+print((lambda a,b: a * b * 10)(10, 20))
