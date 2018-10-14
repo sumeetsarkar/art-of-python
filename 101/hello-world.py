@@ -18,3 +18,6 @@ def greet(name):
 
 # invoke greet function with arguments
 greet('Sumeet')
+
+# print the doc string for the file
+print(__doc__)
