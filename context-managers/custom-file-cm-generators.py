@@ -15,7 +15,11 @@ class ContextManager:
     next(self.__gen, None)
 
 
-def readFile(filePath, mode):
+def get_file(dir, filename):
+  return os.path.join(os.path.dirname(__file__), dir, filename)
+
+
+def file_helper(filePath, mode):
   f = None
   try:
     f = open(filePath, mode)
@@ -27,13 +31,19 @@ def readFile(filePath, mode):
       f.close()
 
 
-DIR_NAME = 'data'
-FILE_NAME = 'sample2.txt'
-FILE_PATH = os.path.join(os.path.dirname(__file__), DIR_NAME, FILE_NAME)
+def read_file(gen):
+  with ContextManager(gen) as f:
+    if f is not None:
+      for l in f.readlines():
+        print(l)
 
-fileGenerator = readFile(FILE_PATH, 'r')
 
-with ContextManager(fileGenerator) as f:
-  if f is not None:
-    for l in f.readlines():
-      print(l)
+print('\nReading file 1...')
+filePath1 = get_file('data', 'sample.txt')
+fileGenerator1 = file_helper(filePath1, 'r')
+read_file(fileGenerator1)
+
+print('\nReading file 2...')
+filePath2 = get_file('data', 'sample2.txt')
+fileGenerator2 = file_helper(filePath2, 'r')
+read_file(fileGenerator2)
