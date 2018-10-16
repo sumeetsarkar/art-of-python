@@ -5,6 +5,8 @@ def printColors(*colors):
     else:
       print(color)
 
+printColors() # no output
+
 printColors('voilet', 'indigo', 'blue', 'green', 'yellow', 'orange', 'red')
 
 printColors(
