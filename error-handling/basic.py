@@ -8,9 +8,9 @@ try:
                 green = 1,
                 red = 2)
   colorCode = colors['red1']
-except:
+except Exception as e:
   # handle exception
-  print('error accessing dictionary, key does not exist')
+  print('error accessing dictionary, key does not exist:', e)
 else:
   print('colorCode', colorCode)
 finally:
