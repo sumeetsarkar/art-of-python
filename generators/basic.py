@@ -10,17 +10,28 @@ def compute():
     yield x
 
 # directly calling a function implementing yield inside will return generator object
-val = compute()
-print(val)  # prints generator object
+genObject = compute()
+print(genObject)  # prints generator object
 
-# generator methods can be iterated over
-for val in compute():
-  print(val)
-
-# get an iterator and iterate over
-val = iter(compute())
+# generator individual iterate
+print('\nIterate as next(genObject)')
 while True:
   try:
-    print(val.next())
+    print(next(genObject))
+  except StopIteration:
+    break
+
+
+# generator methods can be iterated over
+print('\nIterate using for in loop')
+for n in compute():
+  print(n)
+
+# get iterator of generator and iterate over
+print('\nIterate using iter(genObject)')
+iterator = iter(compute())
+while True:
+  try:
+    print(iterator.next())
   except StopIteration:
     break
