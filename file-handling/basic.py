@@ -1,32 +1,53 @@
+"""
+Demonstrates basic file IO operations in python
+"""
+
 import os
 
-def create_file_if_not_exists(filename):
+def create_file_if_not_exists(filePath):
+  """Creates a file if not exists
+  parameters:
+    filePath: path of file to create/ write on to
+  """
+  fileW = None
   try:
-    fileW = open(filename, 'a')
+    # opens file in append mode (creates if not exists)
+    fileW = open(filePath, 'a')
+    # write to file, below text prefixes with \n, which adds text in new line
     fileW.write('\nThe quick brown fox jumped over the lazy dog')
   except Exception as e:
-    fileW = None
     print(e)
   finally:
+    # if fileW was not None, close the file
     if fileW is not None:
       fileW.close()
 
-def read_file(filename):
+def read_file(filePath):
+  """Reads a file
+  parameters:
+    filePath: path of file to read from to
+  """
   fileR = None
   try:
-    fileR = open(filename, 'rt') # (rt) read in text mode is default
-    for line in fileR:
-      print(line)
+    # (rt) read in text mode is default
+    fileR = open(filePath, 'rt')
+    # iterate of the file lines and print each line
+    for l in fileR.readlines():
+      print(l)
   except Exception as e:
-    fileR = None
     print(e)
   finally:
+    # if fileR was not None, close the file
     if fileR is not None:
       fileR.close()
 
-DIR = './data'
-FILE_NAME = 'sample.txt'
-FILE_PATH = os.path.join(os.path.dirname(__file__), DIR, FILE_NAME)
+def get_fully_qualified_file_path(dir, file):
+  return os.path.join(os.path.dirname(__file__), dir, file)
 
-create_file_if_not_exists(FILE_PATH)
-read_file(FILE_PATH)
+
+# get fully qualified path
+filePath = get_fully_qualified_file_path('./data', 'sample.txt')
+# create/ write file
+create_file_if_not_exists(filePath)
+# read file
+read_file(filePath)
