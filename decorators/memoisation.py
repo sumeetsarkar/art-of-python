@@ -23,13 +23,14 @@ def fibonacciWithMemo(n, mem):
 
 print('fibonacciWithMemo', fibonacciWithMemo(10, {}))
 
+# function based decorator
 # we can create a memoize decorator, which memoizes intermediate calculations of recursions in dict
 def memoize(fn):
   mem = {}
-  def wrapper(n):
-    if n not in mem:
-      mem[n] = fn(n)
-    return mem.get(n)
+  def wrapper(*args):
+    if args not in mem:
+      mem[args] = fn(*args)
+    return mem.get(args)
   return wrapper
 
 # using the memoize decorator over a regular recursive fibonacci implementation
@@ -41,6 +42,27 @@ def fibonacciWithDecorator(n):
   return fibonacciWithDecorator(n - 1) + fibonacciWithDecorator(n - 2)
 
 print('fibonacciWithDecorator', fibonacciWithDecorator(10))
+
+
+# class based decorator
+class Memoize:
+  def __init__(self, fn):
+    self.__mem = {}
+    self.__fn = fn
+  
+  def __call__(self, *args):
+    if args not in self.__mem:
+      self.__mem[args] = self.__fn(*args)
+    return self.__mem[args]
+
+# using the class based Memoize decorator over a regular recursive fibonacci implementation
+@memoize
+def fibonacciWithDecoratorClass(n):
+  if n in (0, 1):
+    return n
+  return fibonacciWithDecoratorClass(n - 1) + fibonacciWithDecoratorClass(n - 2)
+
+print('fibonacciWithDecoratorClass', fibonacciWithDecoratorClass(10))
 
 
 
