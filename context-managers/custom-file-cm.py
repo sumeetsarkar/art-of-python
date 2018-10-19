@@ -1,5 +1,8 @@
 """
 Demonstrates a sample implementation of File Context Manager
+
+A python context manager object must implement two special methods,
+__enter__() and __exit__()
 """
 
 import os
