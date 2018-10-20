@@ -1,5 +1,12 @@
 """
 Demonstrates basic file IO operations in python
+
+Please Note:
+
+This sample code does not leverage ContextManagers
+and demonstrates basic usage of open()
+
+File Context Managers are explained well in the context-managers section
 """
 
 import os
@@ -40,6 +47,7 @@ def read_file(filePath):
     # if fileR was not None, close the file
     if fileR is not None:
       fileR.close()
+
 
 def get_fully_qualified_file_path(dir, file):
   return os.path.join(os.path.dirname(__file__), dir, file)
