@@ -21,3 +21,7 @@ class Library:
     Logic().compute()
     some_core_function_exposed()
     self.__logger.log('task completed')
+
+
+def some_other_lib_func():
+  print('some other lib func')
