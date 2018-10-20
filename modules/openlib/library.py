@@ -4,8 +4,13 @@ Sample library code
 
 from .helper import some_aux_helper_func, Helper
 from .core import Logic, Logging
+# from .core import Logic, Logging, FileIO  # FileIO import will not work
+# as module core __init__.py is not empty and does not explicitly import FileIO
+# adding below import in __init__.py in core module, will allow FileIO to be imported here
+# from .fileio import FileIO
 
 class Library:
+
   def __init__(self):
     self.__helper = Helper()
     self.__logger = Logging()
