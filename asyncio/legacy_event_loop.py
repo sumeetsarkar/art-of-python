@@ -33,3 +33,5 @@ def main():
 
 
 main()
+
+print('Executed after main')

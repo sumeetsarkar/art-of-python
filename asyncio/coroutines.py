@@ -41,3 +41,5 @@ async def main():
 
 # asyncio run coroutine
 asyncio.run(main())
+
+print('Executed after main')

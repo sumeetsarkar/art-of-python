@@ -33,3 +33,5 @@ async def main():
 
 
 asyncio.run(main())
+
+print('Executed after main')
