@@ -10,6 +10,7 @@
 - [Error Handling](./error-handling)
 - [File Handling](./file-handling)
 - [Generators](./generators)
+- [Globals](./global)
 - [Iterators](./iterators)
 - [Lambda](./lambda)
 - [Modules](./modules)
