@@ -2,8 +2,8 @@
 Sample library code
 """
 
-from .helper import some_aux_helper_func, Helper
-from .core import Logic, Logging
+from .helper import Helper, some_aux_helper_func
+from .core import Logic, Logging, some_core_function_exposed
 # from .core import Logic, Logging, FileIO  # FileIO import will not work
 # as module core __init__.py is not empty and does not explicitly import FileIO
 # adding below import in __init__.py in core module, will allow FileIO to be imported here
@@ -19,4 +19,5 @@ class Library:
     self.__helper.help_with_task()
     some_aux_helper_func()
     Logic().compute()
+    some_core_function_exposed()
     self.__logger.log('task completed')
