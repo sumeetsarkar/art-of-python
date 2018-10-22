@@ -15,9 +15,9 @@
 
 Once the virtual env is created, it will create a directory with the name used to create the virtualenv. This directory structure will contain bin, include, lib directories.
 
-![virtualenv_bin screenshot](https://raw.githubusercontent.com/sumeetsarkar/art-of-python/master/virtualenv/media/virtualenv_bin.png)
+![venv_bin screenshot](https://raw.githubusercontent.com/sumeetsarkar/art-of-python/master/virtualenv/media/venv_bin.png)
 
-![virtualenv_lib screenshot](https://raw.githubusercontent.com/sumeetsarkar/art-of-python/master/virtualenv/media/virtualenv_lib.png)
+![venv_lib screenshot](https://raw.githubusercontent.com/sumeetsarkar/art-of-python/master/virtualenv/media/venv_lib.png)
 
 
 ## Activate the virtual environment
