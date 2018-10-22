@@ -11,20 +11,21 @@ from .core import Logic, Logging, some_core_function_exposed, fileio
 # from .fileio import FileIO
 # hence, fileio module can be imported from .core, but not the class FileIO directly
 
+
 class Library:
 
-  def __init__(self):
-    self.__helper = Helper()
-    self.__logger = Logging()
-  
-  def do_task(self):
-    self.__helper.help_with_task()
-    some_aux_helper_func()
-    Logic().compute()
-    fileio.FileIO().read()
-    some_core_function_exposed()
-    self.__logger.log('task completed')
+    def __init__(self):
+        self.__helper = Helper()
+        self.__logger = Logging()
+
+    def do_task(self):
+        self.__helper.help_with_task()
+        some_aux_helper_func()
+        Logic().compute()
+        fileio.FileIO().read()
+        some_core_function_exposed()
+        self.__logger.log('task completed')
 
 
 def some_other_lib_func():
-  print('some other lib func')
+    print('some other lib func')

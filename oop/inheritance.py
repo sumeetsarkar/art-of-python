@@ -3,20 +3,25 @@ Demonstrates class inheritance and polymorphism
 """
 
 # Base class Animal
+
+
 class Animal:
-  def eat(self):
-    pass
-  
-  def sleep(self):
-    print('Animal sleeps')
+    def eat(self):
+        pass
+
+    def sleep(self):
+        print('Animal sleeps')
 
 # class Dog extends Animal
+
+
 class Dog(Animal):
-  def eat(self):
-    print('Dog eats')
-  
-  def bark(self):
-    print('Dog barks')
+    def eat(self):
+        print('Dog eats')
+
+    def bark(self):
+        print('Dog barks')
+
 
 # Animal object
 animal = Animal()
@@ -35,16 +40,17 @@ dog.bark()
 
 # class Cat extends Animal
 class Cat(Animal):
-  def eat(self):
-    print('Cat eats')
+    def eat(self):
+        print('Cat eats')
 
-  def purr(self):
-    print('Cat purrs')
+    def purr(self):
+        print('Cat purrs')
 
 
 # class CatHybrid extends Cat and Dog (Order matters)
 class CatHybrid(Cat, Dog):
-  pass
+    pass
+
 
 catHybrid = CatHybrid()
 catHybrid.sleep()
@@ -52,8 +58,11 @@ catHybrid.sleep()
 catHybrid.eat()
 
 # class DogHybrid extends Dog and Cat (Order matters)
+
+
 class DogHybrid(Dog, Cat):
-  pass
+    pass
+
 
 dogHybrid = DogHybrid()
 # eat instance method of Dog is invoked

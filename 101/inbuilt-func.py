@@ -1,6 +1,6 @@
 # Returns the absolute value of a number
 num = -1
-print('abs', abs(num)) # 1
+print('abs', abs(num))  # 1
 
 # Returns True if all items in an iterable object are true
 print('all', all(''))   # True
@@ -35,7 +35,7 @@ print('bool', bool('0'))    # True
 # Returns an array of bytes
 print('bytearray', bytearray('Sumeet', 'UTF8'))
 print('bytearray', bytearray(1))
-print('bytearray', bytearray([0,1,2]))
+print('bytearray', bytearray([0, 1, 2]))
 
 # Returns a bytes object
 print('bytes', bytes(0))
@@ -51,9 +51,12 @@ print('chr', chr(65))   # A
 print('chr', chr(97))   # a
 
 # Deletes the specified attribute (property or method) from the specified object
-class Person:
-  name = 'Sumeet'
-  city = 'Bangalore'
-print('delattr', delattr(Person, 'city')) # None
-#print('delattr', delattr(Person, 'city')) # deleting key not present will cause AttributeError
 
+
+class Person:
+    name = 'Sumeet'
+    city = 'Bangalore'
+
+
+print('delattr', delattr(Person, 'city'))  # None
+# print('delattr', delattr(Person, 'city')) # deleting key not present will cause AttributeError

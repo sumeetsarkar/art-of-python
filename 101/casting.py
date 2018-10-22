@@ -28,7 +28,7 @@ b = str(10.10)
 c = str("10.10")
 d = str(True)
 e = str([1, 2, 3])
-f = str({ '1': 'green', '2': 'blue', '3': 'green' })
+f = str({'1': 'green', '2': 'blue', '3': 'green'})
 
 print('\ncasting with str()')
 print(a, b, c, d, e, f)

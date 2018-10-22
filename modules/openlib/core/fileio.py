@@ -1,4 +1,4 @@
 class FileIO:
 
-  def read(self):
-    print('read file')
+    def read(self):
+        print('read file')

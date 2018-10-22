@@ -14,17 +14,19 @@ print(justTuple1, justTuple2, justTuple3, justTuple4)
 
 # tuple iteration
 for n in justTuple:
-  print(n)
+    print(n)
+
 
 def get_extremes(arr):
-  minVal, maxVal = sys.maxsize, sys.maxsize * -1
-  for n in arr:
-    if n < minVal:
-      minVal = n
-    elif n > maxVal:
-      maxVal = n
-  # returned as tuple
-  return minVal, maxVal
+    minVal, maxVal = sys.maxsize, sys.maxsize * -1
+    for n in arr:
+        if n < minVal:
+            minVal = n
+        elif n > maxVal:
+            maxVal = n
+    # returned as tuple
+    return minVal, maxVal
+
 
 # tuple unpacked to individual variables
 # note: number of explicit members mentioned to unpack variables can be:

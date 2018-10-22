@@ -3,18 +3,20 @@ Demonstrates OOP in python
 Basic class definition/ attributes and instance attributes/ methods
 """
 
+
 class Person:
-  # class attribute
-  someData = 10
+    # class attribute
+    someData = 10
 
-  # instance attributes
-  def __init__(self, fname, lname):
-    self.fname = fname
-    self.lname = lname
+    # instance attributes
+    def __init__(self, fname, lname):
+        self.fname = fname
+        self.lname = lname
 
-  # instance methods
-  def greet(self):
-    return 'Hi, {0} {1}'.format(self.fname, self.lname)
+    # instance methods
+    def greet(self):
+        return 'Hi, {0} {1}'.format(self.fname, self.lname)
+
 
 # creating person object
 person1 = Person('Sumeet', 'Sarkar')
@@ -45,4 +47,3 @@ Person.someData = 30
 print('Person.someData: ', Person.someData)
 # accessing instance variables using Class will cause error
 # print(Person.fname) AttributeError: class Person has no attribute 'fname'
-

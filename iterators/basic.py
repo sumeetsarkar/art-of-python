@@ -16,12 +16,12 @@ list = [1, 2, 3, 4]
 # using iter()
 
 listIter = iter(list)
-print(listIter) # list_iterator object
+print(listIter)  # list_iterator object
 
-print(next(listIter)) # 1
-print(next(listIter)) # 2
-print(next(listIter)) # 3
-print(next(listIter)) # 4
+print(next(listIter))  # 1
+print(next(listIter))  # 2
+print(next(listIter))  # 3
+print(next(listIter))  # 4
 # print(next(listIter)) # raises StopIteration
 
 # iterator , once exhausted of items will raise StopIteration
@@ -33,10 +33,10 @@ for element in iterable:
     # do something with element
 """
 
-listIter = iter(list) # building an iterator over list
+listIter = iter(list)  # building an iterator over list
 
 while True:
-  try:
-    print(next(listIter))
-  except StopIteration:
-    break
+    try:
+        print(next(listIter))
+    except StopIteration:
+        break
