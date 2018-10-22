@@ -7,6 +7,7 @@
 - [Closures](./closures)
 - [Context Managers](./context_managers)
 - [Database Handling](./database_handling)
+- [Debugging](./debugging)
 - [Decorators](./decorators)
 - [Error Handling](./error_handling)
 - [Event Emitters](./event_emitters)
