@@ -25,7 +25,7 @@ However, with usage of breakpoint(), there is a neat little trick, using PYTHONB
 
     PYTHONBREAKPOINT=0 python3 <your-script>.py
 
-![pdb debugging screenshot](media/pdb)
+![pdb debugging screenshot](https://raw.githubusercontent.com/sumeetsarkar/art-of-python/master/debugging/media/pdb.png)
 
 
 <br/>
@@ -39,7 +39,7 @@ However, with usage of breakpoint(), there is a neat little trick, using PYTHONB
 # Set up a breakpoint
 import pudb; pudb.set_trace()
 ```
-![pudb debugging screenshot](media/pudb)
+![pudb debugging screenshot](https://raw.githubusercontent.com/sumeetsarkar/art-of-python/master/debugging/media/pudb.png)
 
 
 <br/>
@@ -63,7 +63,7 @@ breakpoint()
 
     PYTHONBREAKPOINT='web_pdb.set_trace' python3 <your-script>.py
 
-![web_pdb debugging screenshot](media/pudb)
+![web_pdb debugging screenshot](https://raw.githubusercontent.com/sumeetsarkar/art-of-python/master/debugging/media/web_pdb.png)
 
 
 <br/>
@@ -77,4 +77,4 @@ Set code breakpoint in VSCode editor GUI
 
 Run the program in debug mode (F5)
 
-![vscode debugging screenshot](media/vscode)
+![vscode debugging screenshot](https://raw.githubusercontent.com/sumeetsarkar/art-of-python/master/debugging/media/vscode.png)
