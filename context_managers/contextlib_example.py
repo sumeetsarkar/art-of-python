@@ -17,7 +17,7 @@ class HtmlHelper:
     def indenttabs(self, indent):
         """Returns \t\t... depending upon indent count"""
         tabs = ''
-        for i in range(indent):
+        for _ in range(indent):
             tabs += '\t'
         return tabs
 
