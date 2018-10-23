@@ -6,6 +6,7 @@
         append
         clear
         copy
+        count
         extend
         index
         len
@@ -62,3 +63,31 @@ print(any(colors))
 
 # Returns True if all items in an iterable object are true
 print(all(colors))
+
+# Count the number of items in array with specified Value
+print(colors.count('yellow'))
+
+# Sorting with Key
+
+# Simple use case, key=len
+myarr = ['aa', 'a', 'aaaa', 'aaa']
+myarr.sort(key=len)
+print(myarr)
+myarr.sort(key=len, reverse=True)   # reverese indicates to reverese the order decided by key
+print(myarr)
+
+
+# Complex use case, key= custom function
+def sort_func(e):
+    """Get the maximum length of string, for all values in dict
+    """
+    return max(e.values(), key=len)
+
+listdict = [
+    {0:'RED', 1:'GREEN', 2:'BLUE'},
+    {0:'CYAN', 1:'MAGENTA', 2:'YELLOW'},
+    {0:'A', 1:'BB'},
+]
+
+listdict.sort(key=sort_func, reverse=True)
+print(listdict)
