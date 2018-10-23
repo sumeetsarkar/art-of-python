@@ -5,6 +5,7 @@
 - [Arguments - args, kwargs](./arguments)
 - [Asyncio](./asyncio)
 - [Closures](./closures)
+- [Collections](./collections)
 - [Context Managers](./context_managers)
 - [Database Handling](./database_handling)
 - [Debugging](./debugging)
