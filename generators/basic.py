@@ -34,6 +34,6 @@ print('\nIterate using iter(genObject)')
 iterator = iter(compute())
 while True:
     try:
-        print(iterator.next())
+        print(next(iterator))
     except StopIteration:
         break
