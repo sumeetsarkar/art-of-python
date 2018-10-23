@@ -17,6 +17,10 @@
 
 colors = ['red', 'green', 'blue']
 
+# List is iterable
+for c in colors:
+    print(c)
+
 # Adds new item to the last of the colors
 colors.append('white')
 print(colors)
