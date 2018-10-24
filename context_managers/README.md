@@ -160,3 +160,36 @@ Task().initiate()
 ```
 
 
+## Fun with context manager using context lib
+
+Here is a small sample below, expressing the idea. A better implementation is at [contextlib_example.py](https://github.com/sumeetsarkar/art-of-python/blob/master/context_managers/contextlib_example.py)
+
+```python
+from contextlib import contextmanager
+
+@contextmanager
+def tag(tagname):
+    print('<{}>'.format(tagname))
+    yield
+    print('<\{}>'.format(tagname))
+
+with tag('html'):
+    with tag('div'):
+        with tag('h1'):
+            print('Context Managers')
+        with tag('p'):
+            print('Hello World!')
+
+# Outputs
+#
+# <html>
+# <div>
+# <h1>
+# Context Managers
+# <\h1>
+# <p>
+# Hello World!
+# <\p>
+# <\div>
+# <\html>
+```
