@@ -1,0 +1,93 @@
+# Context Managers
+
+Context managers are an efficient way to wrap around enter and exit logic for a piece of code that performs on the resource on which enter and exit logic applies.
+
+It is a clean way of wrapping the code, to make sure no matter the operation being performed on the resource completes or raises an exception, the exit logic will always be executed.
+
+For any class to be a context manager, it should implement ```__enter__``` and ```__exit__``` methods
+
+```python
+class MyContextManager:
+
+    def __enter__(self):
+        pass
+    
+    def __exit__(self):
+        pass
+```
+
+## Invoking a Context Manager
+
+A context manager is invoked using ```with``` keyword. It may or may not return a resource to be worked on. We will see various examples of it further.
+
+A file can be opened as a context manager or a more traditional way. Let us examine both approaches.
+
+```python
+# A traditional file write
+
+# Open file
+f = open('my_file.txt', 'a')
+
+# Perform write operation on file
+f.write('The quick brown fox jumped over the lazy dog')
+
+# Explicitly close the file
+f.close()
+```
+
+So the pattern we see is that, to operate on the resource, we perform some 'on enter ' operation on it, then perform the operation and finally to mark completion, we perform the 'on exit' operation
+
+This puts a lot of maintenance on the developer and may lead to scenarios, when the 'on exit' operation might never be performed.
+
+```python
+# Open file
+f = open('my_file.txt', 'a')
+
+# Perform write operation on file
+f.write('The quick brown fox jumped over the lazy dog')
+
+# Simulate an exception occured
+raise Exception('some exception you knew could occur')
+
+# Explicitly close the file
+f.close()
+```
+
+In the above scenario, the ```f.close()``` is never executed
+
+To prevent this on might wrap around the code in a ```try except finally``` block, like below.
+
+```python
+f = None
+try:
+    # Open file
+    f = open('my_file.txt', 'a')
+
+    # Perform write operation on file
+    f.write('The quick brown fox jumped over the lazy dog')
+
+    # Simulate an exception occured
+    raise Exception('some exception you knew could occur')
+except:
+    print('Oops exception!')
+finally:
+    if f is not None:
+        f.close()
+```
+
+Here, we see the job get done! But that is too many lines of code and carefully thought of flow of execution to be able to close a resource. Think how this would from more nested and cumbersome to maintain, upon accessing nested resources! Check the example [contextlib_example.py](https://github.com/sumeetsarkar/art-of-python/blob/master/context_managers/contextlib_example.py) to see the clean nesting with context managers
+
+
+## Using Context Managers
+
+```python
+# Open file using open() as Context Manager
+
+with open('my_file.txt', 'a') as f:
+    f.write('The quick brown fox jumped over the lazy dog')
+
+# And you are done!
+# Context Manager will take care of the exit logic,
+# which here is f.close()
+```
+
