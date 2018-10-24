@@ -91,3 +91,32 @@ with open('my_file.txt', 'a') as f:
 # which here is f.close()
 ```
 
+
+## Implementing a Context Manager
+
+As discussed above, to write a context manager class, the class must implement the ```__enter__``` and ```__exit__``` methods. So let us implement a File context manager, working on the ```open``` and ```close``` methods of the file. Even though as we just saw in above example file open is already a context manager, but for now lets say we need to implement one!
+
+```python
+class FileCM:
+    def __init__(self, filePath, mode):
+        """Sets the filePath and mode"""
+        self.__filePath = filePath
+        self.__mode = mode
+
+    def __enter__(self):
+        """Opens the file with filepath and mode
+        Returns the file instance
+        """
+        self.__f = open(self.__filePath, self.__mode)
+        return self.__f
+
+    def __exit__(self, *args):
+        """Closes the file on exit"""
+        self.__f.close()
+
+
+# Access context manager using with keywork
+with FileCM('sample.txt', 'r') as f:
+    print(f.read())
+
+```
