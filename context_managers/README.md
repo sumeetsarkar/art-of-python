@@ -118,5 +118,45 @@ class FileCM:
 # Access context manager using with keywork
 with FileCM('sample.txt', 'r') as f:
     print(f.read())
-
 ```
+
+
+A practical illustration of using context managers in threading Lock
+
+```python
+from threading import Lock
+
+class Task:
+    def __init__(self):
+        self.__lock = Lock()
+
+    def __do_some_uncertain_task_1(self):
+        # Acquires lock as a context manager
+        with self.__lock:
+            raise Exception('some error you knew may happen!')
+
+    def __do_some_uncertain_task_2(self):
+        # Acquires lock
+        self.__lock.acquire()
+        raise Exception('some error you knew may happen!')
+        # Code here is unreachable as before lock release the exception is raised
+        self.__lock.release()
+
+    def initiate(self):
+        try:
+            # __do_some_uncertain_task_1 is safe to user here
+            self.__do_some_uncertain_task_1()
+            # __do_some_uncertain_task_2 will raise exception and not release the lock
+            # upon catching the exception the code will be blocked to proceed further as lock cannot be acquired
+            self.__do_some_uncertain_task_2()
+            # 
+        except:
+            print('Caught exception')
+        self.__lock.acquire()
+
+
+# Code execution finishes gracefully
+Task().initiate()
+```
+
+
