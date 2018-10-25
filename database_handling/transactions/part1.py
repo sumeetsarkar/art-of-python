@@ -5,7 +5,6 @@ Reference: https://bbengfort.github.io/observations/2017/12/06/psycopg2-transact
 
 import os
 import json
-from contextlib import contextmanager
 import psycopg2 as pg
 
 
