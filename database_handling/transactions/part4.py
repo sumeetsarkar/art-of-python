@@ -54,7 +54,7 @@ def transaction():
         yield conn
         conn.commit()
     except Exception as e:
-        print(e)
+        print('\nROLLBACK TRANSACTION!!!', e)
         conn.rollback()
     finally:
         conn.close()
@@ -105,7 +105,7 @@ def verify_account(conn, username, accountid):
         curs.execute(sql, (username, accountid))
         res = curs.fetchone()
         if res is None:
-            raise ValueError('No matching user id found for given username and account')
+            raise ValueError('\nNo matching user id found for given username and account')
         return res[0]
 
 
@@ -117,7 +117,7 @@ def authenticate(conn, username, pin, accountid):
         sql = 'SELECT 1 FROM users WHERE username=%s AND pin=%s'
         curs.execute(sql, (username, pin))
         if curs.fetchone() is None:
-            raise ValueError('Userid/ Pin mismatch')
+            raise ValueError('\nUserid/ Pin mismatch')
 
 
 def ledger_entry(conn, accountid, ledgertype, amount):
@@ -131,7 +131,7 @@ def ledger_entry(conn, accountid, ledgertype, amount):
         )
         res = curs.execute(sql, (accountid, ledgertype, amount))
         if res is not None:
-            print(res)
+            print('\nledger_entry...', res)
 
 
 def get_balance(conn, userid, accountid):
@@ -143,7 +143,7 @@ def get_balance(conn, userid, accountid):
         curs.execute(sql, (userid, accountid))
         res = curs.fetchone()
         if res is None:
-            raise ValueError('No matching account for userid and accountid')
+            raise ValueError('\nNo matching account for userid and accountid')
         return res[0]
 
 
@@ -151,7 +151,7 @@ def update_balance(conn, userid, accountid, amount):
     """
     Makes deposit to the account
     """
-    print('\n\nUpdating account user:{}, id:{}, amount:{}'.format(userid, accountid, amount))
+    print('\nUpdating account user:{}, id:{}, amount:{}'.format(userid, accountid, amount))
     with conn.cursor() as curs:
         current = get_balance(conn, userid, accountid)
         sql = (
@@ -161,8 +161,8 @@ def update_balance(conn, userid, accountid, amount):
         )
         res = curs.execute(sql, (current + amount, userid, accountid))
         if res is not None:
-            print(res)
-            raise ValueError('No matching account for userid and accountid')
+            print('\nupdate_balance...', res)
+            raise ValueError('\nNo matching account for userid and accountid')
 
 
 @transact
@@ -177,7 +177,7 @@ def deposit(conn, username, pin, accountid, amount):
     update_balance(conn, userid, accountid, amount)
     # Step 5: show balance
     balance = get_balance(conn, userid, accountid)
-    print('{} Deposit: {} , Balance: {}'.format(username, str(amount), str(balance)))
+    print('\n{} Deposit: {} , Balance: {}'.format(username, str(amount), str(balance)))
 
 
 @transact
@@ -192,21 +192,7 @@ def withdraw(conn, username, pin, accountid, amount):
     update_balance(conn, userid, accountid, amount * -1)
     # Step 5: show balance
     balance = get_balance(conn, userid, accountid)
-    print('{} Withdraw: {} , Balance: {}'.format(username, str(amount), str(balance)))
-
-
-@transact
-def list_users(conn):
-    """
-    List all users
-    """
-    print('\n\nListing all users')
-    with conn.cursor() as curs:
-        curs.execute('SELECT * from users')
-        rows = curs.fetchall()
-        print('Number of results:', curs.rowcount)
-        for row in rows:
-            print(row)
+    print('\n{} Withdraw: {} , Balance: {}'.format(username, str(amount), str(balance)))
 
 
 def main(options):
@@ -214,6 +200,9 @@ def main(options):
         create_schema(SCHEMA_PATH)
         dogfeed(FEED_PATH)
     
+    # Since we perform the below operations sequentially
+    # We do not witness the transactions getting interleaving
+    # Hence, not worrying about isolation_levels, something we discuss in part 5
     deposit('john', 1234, 1, 20000)
     deposit('john', 1234, 2, 100)
     withdraw('john', 1234, 1, 10000)
