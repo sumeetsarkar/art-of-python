@@ -2,6 +2,8 @@ DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(255) UNIQUE,
+    fname VARCHAR(255),
+    lname VARCHAR(255),
     pin SMALLINT NOT NULL
 );
 
