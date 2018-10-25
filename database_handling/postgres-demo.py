@@ -16,10 +16,9 @@ def get_connection_params(configFilePath):
       str: database connection string
     """
     # read file
-    fileR = open(configFilePath, 'rt')
-    # parse json
-    config = json.loads(fileR.read())
-    fileR.close()
+    with open(configFilePath, 'rt') as f:
+        # parse json
+        config = json.load(f)
     # read keys from json config
     DB_NAME = config['db']
     USER = config['user']
@@ -38,28 +37,28 @@ def connect_to_db(connString):
     return psycopg2.connect(connString)
 
 
-def print_db_version(cur):
+def print_db_version(conn):
     """
     Parameters:
       cur (cursor):
     """
-    cur.execute('SELECT version()')
-    dbVersion = cur.fetchone()
-    print(dbVersion)
-    cur.close()
+    with conn.cursor() as cur:
+        cur.execute('SELECT version()')
+        dbVersion = cur.fetchone()
+        print(dbVersion)
 
 
-def print_all_employees(cur):
+def print_all_employees(conn):
     """
     Parameters:
       cur (cursor):
     """
-    cur.execute('SELECT * FROM employee')
-    rows = cur.fetchall()
-    print('Number of results:', cur.rowcount)
-    for row in rows:
-        print(row)
-    cur.close()
+    with conn.cursor() as cur:
+        cur.execute('SELECT * FROM employee')
+        rows = cur.fetchall()
+        print('Number of results:', cur.rowcount)
+        for row in rows:
+            print(row)
 
 
 def init():
@@ -67,16 +66,12 @@ def init():
         dirName = os.path.dirname(__file__)
         configFilePath = os.path.join(dirName, './config/db-connection.json')
         connectionString = get_connection_params(configFilePath)
-        dbConn = connect_to_db(connectionString)
-        print('Database connection opened...\n')
-        print_db_version(dbConn.cursor())
-        print_all_employees(dbConn.cursor())
+        with connect_to_db(connectionString) as dbConn:
+            print('Database connection opened...\n')
+            print_db_version(dbConn)
+            print_all_employees(dbConn)
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
-    finally:
-        if dbConn is not None:
-            dbConn.close()
-            print('\nDatabase connection closed...')
 
 
 # start program
