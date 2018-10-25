@@ -6,6 +6,7 @@ Reference: https://bbengfort.github.io/observations/2017/12/06/psycopg2-transact
 import os
 import json
 from contextlib import contextmanager
+from functools import wraps
 import psycopg2 as pg
 
 DIR = os.path.dirname(__file__)
@@ -56,6 +57,18 @@ def transaction():
         conn.close()
 
 
+def transact(fn):
+    """
+    This decorator helps in creating a new connection per transaction
+    """
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        with transaction() as conn:
+            fn(conn, *args, **kwargs)
+    return wrapper
+
+
+@transact
 def create_schema(conn, schemapath):
     """
     DROP/ CREATE schema from file
@@ -66,6 +79,7 @@ def create_schema(conn, schemapath):
         curs.execute(sql)
 
 
+@transact
 def dogfeed(conn, feedpath):
     """
     Inserts seed data to users and accounts table
@@ -76,6 +90,7 @@ def dogfeed(conn, feedpath):
         curs.execute(sql)
 
 
+@transact
 def make_deposit(conn, userid, acctype, amount):
     """
     Makes deposit to the account
@@ -89,6 +104,7 @@ def make_deposit(conn, userid, acctype, amount):
             print(res)
 
 
+@transact
 def list_users(conn):
     """
     List all users
@@ -101,7 +117,8 @@ def list_users(conn):
         for row in rows:
             print(row)
 
-    
+
+@transact
 def show_accounts(conn, userid):
     """
     Lists account statement for a given userid
@@ -116,43 +133,23 @@ def show_accounts(conn, userid):
 
 
 def main(options):
-    # Operations on a connection is performed by the cursors from connection
-    # Every connections starts a new transaction unless committed or rollback
-    # So no matter the first cursor performing a execute or subsequent cursor
-    # All the executions will not be persisted to Database unless committed
+    if len(options) > 0 and options[0] == '--flush':
+        create_schema(SCHEMA_PATH)
+        dogfeed(FEED_PATH)
 
-    # By default even a simple SELECT will start a transaction: in long-running programs, 
-    # if no further action is taken, the session will remain “idle in transaction”, 
-    # an undesirable condition for several reasons (locks are held by the session, tables bloat…). 
-    # For long lived scripts, either make sure to terminate a transaction 
-    # as soon as possible or use an autocommit connection
-
-    # Here since we created a context manager function transaction,
-    # which takes care of the connection to commit or rollback in case of any exception raised
-    # and finally close the connection (Essentially returning the connection to a pool, discussed in future parts)
-    with transaction() as conn:
-        if len(options) > 0 and options[0] == '--flush':
-            create_schema(conn, SCHEMA_PATH)
-            dogfeed(conn, FEED_PATH)
-
-        # Lists all the users, but also initiates a transaction
-        list_users(conn)
-        # Still in transaction
-        show_accounts(conn, 1)
-
-        # Raises a constraint exception, due to negative amount
-        # make_deposit(conn, 1, 'savings', -130.00)
-
-        # current transaction is aborted, commands ignored until end of transaction block
-        make_deposit(conn, 1, 'savings', 130.00) # this command, as well as any subsequent command has no effect, a rollback has to be made
-
-        # Rollback needs to be called to end the transaction and start a new one.
-        
-        make_deposit(conn, 1, 'savings', 150.00)
-        # Commit persists the update to database
-
-        # Lists the account statement for user 1, but also initiates a transaction
-        show_accounts(conn, 1)
+    # Since each of the below function definitions is decorated with @transact,
+    # each of the performs its database operation in its own transaction, i.e., its own connection
+    list_users()
+    show_accounts(1)
+    make_deposit(1, 'savings', 130.00)
+    show_accounts(1)
+    # As a result, the following make_deposit causing a Constraint Exception 
+    # does not effect the following transactions, as this exception is rolled back
+    # and the connection is released
+    make_deposit(1, 'savings', -130.00)
+    show_accounts(1)
+    make_deposit(1, 'savings', 150.00)
+    show_accounts(1)
 
 
 
