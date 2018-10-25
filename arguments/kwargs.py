@@ -1,3 +1,15 @@
+"""Demonstrates kwargs in python
+"""
+
+def analyzekwargs(**kwargs):
+    print(kwargs)
+    # Since kwargs is a dictionary here, corresponding dict methods apply
+    print(kwargs.get('fname', 'Some Name'))
+    print(kwargs.get('name', 'Some Name'))
+    # passing kwargs to another function accepting kwargs
+    print_arguments(**kwargs)
+
+
 def print_arguments(**kwargs):
     for k, v in kwargs.items():
         print(k, v)
@@ -35,3 +47,5 @@ def print_arguments3(fname, *args, **kwargs):
 print_arguments3('Sumeet', lname='Sarkar')
 # fname recieves 'Sumeet', args recieve hello and kwargs recieve lname
 print_arguments3('Sumeet', 'hello', lname='Sarkar')
+
+analyzekwargs(fname='Sumeet', lname='Sarkar')
