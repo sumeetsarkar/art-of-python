@@ -8,10 +8,15 @@ import json
 from contextlib import contextmanager
 import psycopg2 as pg
 
+DIR = os.path.dirname(__file__)
+DB_CONFIG = os.path.join(DIR, './config/db-connection.json')
 
-def connect_to_db(configpath):
+SCHEMA_PATH = os.path.join(DIR, './schema.sql')
+FEED_PATH = os.path.join(DIR, './dogfeed.sql')
+
+def get_db_connection_string(configpath):
     """
-    Connect to PostgreSQL and return connection
+    Reads the database config and returns DB connection string
     """
     with open(configpath, 'r') as f:
         config = json.load(f)
@@ -20,7 +25,17 @@ def connect_to_db(configpath):
         USER = config['user']
         PASSWORD = config['password']
         # return connection string
-        return pg.connect('dbname={0} user={1} password={2}'.format(DB_NAME, USER, PASSWORD))
+        return 'dbname={0} user={1} password={2}'.format(DB_NAME, USER, PASSWORD)
+
+
+DB_CONN_STRING = get_db_connection_string(DB_CONFIG)
+
+
+def connect_to_db():
+    """
+    Connect to PostgreSQL and return connection
+    """
+    return pg.connect(DB_CONN_STRING)
 
 
 def create_schema(conn, schemapath):
@@ -85,9 +100,7 @@ def show_accounts(conn, userid):
 @contextmanager
 def transaction():
     try:
-        DIR = os.path.dirname(__file__)
-        configpath = os.path.join(DIR, './config/db-connection.json')
-        conn = connect_to_db(configpath)
+        conn = connect_to_db()
         yield conn
         conn.commit()
     except Exception as e:
@@ -97,11 +110,7 @@ def transaction():
         conn.close()
 
 
-
-
 def main(options):
-    DIR = os.path.dirname(__file__)
-
     # Operations on a connection is performed by the cursors from connection
     # Every connections starts a new transaction unless committed or rollback
     # So no matter the first cursor performing a execute or subsequent cursor
@@ -113,12 +122,13 @@ def main(options):
     # For long lived scripts, either make sure to terminate a transaction 
     # as soon as possible or use an autocommit connection
 
+    # Here since we created a context manager function transaction,
+    # which takes care of the connection to commit or rollback in case of any exception raised
+    # and finally close the connection (Essentially returning the connection to a pool, discussed in future parts)
     with transaction() as conn:
-        if len(options) > 0 and options[0] == '--flush':    
-            schemapath = os.path.join(DIR, './schema.sql')
-            create_schema(conn, schemapath)
-            feedpath = os.path.join(DIR, './dogfeed.sql')
-            dogfeed(conn, feedpath)
+        if len(options) > 0 and options[0] == '--flush':
+            create_schema(conn, SCHEMA_PATH)
+            dogfeed(conn, FEED_PATH)
 
         # Lists all the users, but also initiates a transaction
         list_users(conn)

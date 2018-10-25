@@ -8,9 +8,15 @@ import json
 import psycopg2 as pg
 
 
-def connect_to_db(configpath):
+DIR = os.path.dirname(__file__)
+DB_CONFIG = os.path.join(DIR, './config/db-connection.json')
+
+SCHEMA_PATH = os.path.join(DIR, './schema.sql')
+FEED_PATH = os.path.join(DIR, './dogfeed.sql')
+
+def get_db_connection_string(configpath):
     """
-    Connect to PostgreSQL and return connection
+    Reads the database config and returns DB connection string
     """
     with open(configpath, 'r') as f:
         config = json.load(f)
@@ -19,7 +25,17 @@ def connect_to_db(configpath):
         USER = config['user']
         PASSWORD = config['password']
         # return connection string
-        return pg.connect('dbname={0} user={1} password={2}'.format(DB_NAME, USER, PASSWORD))
+        return 'dbname={0} user={1} password={2}'.format(DB_NAME, USER, PASSWORD)
+
+
+DB_CONN_STRING = get_db_connection_string(DB_CONFIG)
+
+
+def connect_to_db():
+    """
+    Connect to PostgreSQL and return connection
+    """
+    return pg.connect(DB_CONN_STRING)
 
 
 def create_schema(conn, schemapath):
@@ -104,10 +120,8 @@ def show_accounts(conn, userid):
 
 def main(options):
     try:
-        DIR = os.path.dirname(__file__)
-        configpath = os.path.join(DIR, './config/db-connection.json')
         # All subsequent Database operations in this script are performed on this connection
-        conn = connect_to_db(configpath)
+        conn = connect_to_db()
 
         # Operations on a connection is performed by the cursors from connection
         # Every connections starts a new transaction unless committed or rollback
@@ -120,11 +134,9 @@ def main(options):
         # For long lived scripts, either make sure to terminate a transaction 
         # as soon as possible or use an autocommit connection
 
-        if len(options) > 0 and options[0] == '--flush':    
-            schemapath = os.path.join(DIR, './schema.sql')
-            create_schema(conn, schemapath)
-            feedpath = os.path.join(DIR, './dogfeed.sql')
-            dogfeed(conn, feedpath)
+        if len(options) > 0 and options[0] == '--flush':
+            create_schema(conn, SCHEMA_PATH)
+            dogfeed(conn, FEED_PATH)
 
         # Lists all the users, but also initiates a transaction
         list_users(conn)
