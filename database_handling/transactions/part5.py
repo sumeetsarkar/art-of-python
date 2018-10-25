@@ -130,7 +130,7 @@ def verify_account(conn, username, accountid):
         curs.execute(sql, (username, accountid))
         res = curs.fetchone()
         if res is None:
-            raise ValueError('No matching user id found for given username and account')
+            raise ValueError('\nNo matching user id found for given username and account')
         return res[0]
 
 
@@ -142,7 +142,7 @@ def authenticate(conn, username, pin, accountid):
         sql = 'SELECT 1 FROM users WHERE username=%s AND pin=%s'
         curs.execute(sql, (username, pin))
         if curs.fetchone() is None:
-            raise ValueError('Userid/ Pin mismatch')
+            raise ValueError('\nUserid/ Pin mismatch')
 
 
 def ledger_entry(conn, accountid, ledgertype, amount):
@@ -168,7 +168,7 @@ def get_balance(conn, userid, accountid):
         curs.execute(sql, (userid, accountid))
         res = curs.fetchone()
         if res is None:
-            raise ValueError('No matching account for userid and accountid')
+            raise ValueError('\nNo matching account for userid and accountid')
         return res[0]
 
 
@@ -187,7 +187,7 @@ def update_balance(conn, userid, accountid, amount):
         res = curs.execute(sql, (current + amount, userid, accountid))
         if res is not None:
             print('\nupdate_balance', res)
-            raise ValueError('No matching account for userid and accountid')
+            raise ValueError('\nNo matching account for userid and accountid')
 
 
 def on_deposit_failure(**kwargs):
