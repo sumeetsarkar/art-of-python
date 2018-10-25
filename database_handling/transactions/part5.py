@@ -75,10 +75,8 @@ def transaction(name='transaction', *args, **kwargs):
     except Exception as e:
         print('\nROLLBACK TRANSACTION...', e)
         conn.rollback()
-        username = kwargs.get('username', None)
-        amount = kwargs.get('amount', None)
         failure_handler = kwargs.get('failure_handler', None)
-        failure_handler and failure_handler(username, amount)
+        failure_handler and failure_handler(**kwargs)
     finally:
         conn.reset()
         pool.putconn(conn)
@@ -192,12 +190,12 @@ def update_balance(conn, userid, accountid, amount):
             raise ValueError('No matching account for userid and accountid')
 
 
-def on_deposit_failure(username, amount):
-    print('\nDEPOSIT failure!!!!', username, str(amount))
+def on_deposit_failure(**kwargs):
+    print('\nDEPOSIT failure!!!!', kwargs.get('username', None), str(kwargs.get('amount', None)))
 
 
-def on_withdraw_failure(username, amount):
-    print('\nWITHDRAW failure!!!!', username, str(amount))
+def on_withdraw_failure(**kwargs):
+    print('\nWITHDRAW failure!!!!', kwargs.get('username', None), str(kwargs.get('amount', None)))
 
 
 @transact({
