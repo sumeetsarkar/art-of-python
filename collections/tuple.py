@@ -22,9 +22,9 @@ print('Index of 2:', justTuple.index(2))
 print('Index of 4:', justTuple.index(4))
 # print('Index of 0:', justTuple.index(0))    # raises ValueError: 0 not in tuple
 
-# Tuple spread
-justTuple1, justTuple2, justTuple3, justTuple4 = 1, 2, 3, 4
-print(justTuple1, justTuple2, justTuple3, justTuple4)
+# Tuple unpack
+tu1, tu2, tu3, tu4 = 1, 2, 3, 4
+print(tu1, tu2, tu3, tu4)
 
 
 # Tuple iteration
