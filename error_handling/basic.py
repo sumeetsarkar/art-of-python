@@ -1,4 +1,6 @@
-# Handling errors using try except finally
+"""
+Handling errors using try except finally
+"""
 
 colorCode = -1
 
