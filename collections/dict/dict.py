@@ -133,5 +133,13 @@ dict_traversal(vowel_dict)
 
 # Since, fromkeys V param is an object passed as reference to each key
 # Changing the V, updates the V in all
-person.update({'name': 'Sumeet Sarkar'})
+person.update({'name': 'Sumeet'})
 dict_traversal(vowel_dict)
+
+
+# Destructuring a dictionary
+rgbcolors = {'r':'RED', 'g':'GREEN', 'b':'BLUE'}
+r, g, b = [rgbcolors[k] for k in rgbcolors.keys()]
+
+print('\ndict destructuring...')
+print(r, g, b)
