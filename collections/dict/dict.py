@@ -13,6 +13,14 @@
         values
 """
 
+# declaring a dictionary
+colordict = {'r':'RED', 'g':'GREEN', 'b':'BLUE'}
+print(colordict)
+
+# using dict
+colordict = dict(r='RED', g='GREEN', b='BLUE')
+print(colordict)
+
 
 def print_keys(dict):
     print('\nprinting keys...')
