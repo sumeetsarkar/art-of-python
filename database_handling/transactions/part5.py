@@ -78,6 +78,9 @@ def transaction(name='transaction', *args, **kwargs):
         failure_handler = kwargs.get('failure_handler', None)
         failure_handler and failure_handler(**kwargs)
     finally:
+        # The method rolls back an eventual pending transaction
+        # and executes the PostgreSQL RESET and SET SESSION AUTHORIZATION
+        # to revert the session to the default values
         conn.reset()
         pool.putconn(conn)
 
