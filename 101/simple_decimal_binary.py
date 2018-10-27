@@ -5,8 +5,8 @@ Simple program to convert between binary and decimal
 def decimaltobinary(d):
     binary = []
     while d/2 != 0:
-        binary.append(str(d%2))
-        d = int(d/2)
+        d, r = divmod(d, 2)
+        binary.append(str(r))
     binary.reverse()
     return int(''.join(binary))
     
