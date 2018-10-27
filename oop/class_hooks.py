@@ -19,6 +19,7 @@ class MyClass:
     def __init_subclass__(self):
         """ called when a child is subclassed """
         print('__init_subclass__')
+        super().__init_subclass__()
 
     def __call__(self):
         """ on call of object """

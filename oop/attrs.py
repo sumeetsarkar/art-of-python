@@ -30,5 +30,7 @@ print('getattr(point, \'C\')', getattr(Point, 'C'))
 # For class variables, instead execute delattr on Class
 print('delattr(point, \'C\')', delattr(Point, 'C'))
 
+# print('delattr(point, \'C\')', delattr(Point, 'C'))   # AttributeError, already deleted
+
 print('getattr(point, \'C\')', getattr(Point, 'C', None))
 
