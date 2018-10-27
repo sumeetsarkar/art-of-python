@@ -151,3 +151,8 @@ r, g, b = [rgbcolors[k] for k in rgbcolors.keys()]
 
 print('\ndict destructuring...')
 print(r, g, b)
+
+
+# Print the dictionary items in the sorted order of keys
+for k in sorted(rgbcolors.keys()):
+    print(k, rgbcolors[k])
