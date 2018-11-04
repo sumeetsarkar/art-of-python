@@ -51,12 +51,19 @@ print('chr', chr(65))   # A
 print('chr', chr(97))   # a
 
 # Deletes the specified attribute (property or method) from the specified object
-
-
 class Person:
     name = 'Sumeet'
     city = 'Bangalore'
 
-
 print('delattr', delattr(Person, 'city'))  # None
 # print('delattr', delattr(Person, 'city')) # deleting key not present will cause AttributeError
+
+# Without arguments, return the list of names in the current local scope.
+# With an argument, attempt to return a list of valid attributes for that object.
+print('dir() local scope', dir())
+print('dir(Person)', dir(Person))
+
+# Take two (non complex) numbers as arguments and 
+# return a pair of numbers consisting of their quotient and remainder when using integer division
+print('divmod(49, 2)', divmod(49, 2))
+print('divmod(48, 2)', divmod(48, 2))
