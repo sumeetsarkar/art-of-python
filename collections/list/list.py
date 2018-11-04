@@ -95,3 +95,27 @@ listdict = [
 
 listdict.sort(key=sort_func, reverse=True)
 print(listdict)
+
+# Initialize a list of size 1 with element as 0 
+nums = [0]
+print('\nArray size 1\n', nums)
+
+# Initialize a list of size 10 with each element as 0
+nums = [0] * 10
+print('\nArray size 10\n', nums)
+
+# Intialize a 2D list of 10, 10 size with each element as 0
+nums2d = [[0] * 10] * 10
+print('\n2D Array size 10, 10, each element 0\n', nums2d)
+
+# Generate a 2D list 10, 10 size with numbers in each list from 0-9
+nums2d = [[i for i in range(10)] for _ in range(10)]
+print('\n\n2D Array size 10, 10, 0-9\n', nums2d)
+
+# Same as above
+nums2d = [[i for i in range(10)]] * 10
+print('\n\n2D Array size 10, 10, 0-9\n', nums2d)
+
+# Generate a Array with numbers from 0-9 repeating 10 times
+nums2d = [i for i in range(10)] * 10
+print('\n\nArray size 100 repeating 0-9\n', nums2d)
