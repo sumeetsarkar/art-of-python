@@ -191,6 +191,8 @@ print('\n\n---------------------------------------\n\n')
 
 class SecondChild(MyClass):
     def __new__(cls, *args, **kwargs):
+        super().__new__(cls, *args, **kwargs)
+        # Not returning the instance or not calling super will not instantiate the object
         return 'Broke the chain of __new__'
 
     def __init__(self, a, b):
