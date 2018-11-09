@@ -67,3 +67,11 @@ print('dir(Person)', dir(Person))
 # return a pair of numbers consisting of their quotient and remainder when using integer division
 print('divmod(49, 2)', divmod(49, 2))
 print('divmod(48, 2)', divmod(48, 2))
+
+# Return the largest item in an iterable or the smallest of two or more arguments.
+print('max', max(1,2,3,4))
+print('max', max([1,2,3,4]))
+
+# Return the smallest item in an iterable or the smallest of two or more arguments.
+print('min', min(1,2,3,4))
+print('min', min([1,2,3,4]))
