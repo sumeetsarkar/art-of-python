@@ -32,11 +32,11 @@ class Baz:
     x = 10
     y = 20
 
-    def add(cls):
-        return cls.x + cls.y
+    def add(self):
+        return Baz.x + Baz.y
 
 b = Baz()
-print(b.add())
+print('Baz add', b.add())
 
 
 
