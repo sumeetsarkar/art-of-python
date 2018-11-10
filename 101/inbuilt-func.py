@@ -75,3 +75,29 @@ print('max', max([1,2,3,4]))
 # Return the smallest item in an iterable or the smallest of two or more arguments.
 print('min', min(1,2,3,4))
 print('min', min([1,2,3,4]))
+
+# zip
+# Example 1
+odd = [1, 3, 5, 7]
+even = [2, 4, 6, 8]
+# Returns an iterator of tuples, of pairs of ith item from each list until the smallest list
+zipped = zip(odd, even)
+tuplelist = list(zipped)
+print(tuplelist)
+# Output
+# [(1, 2), (3, 4), (5, 6), (7, 8)]
+
+# Example 2
+l1 = [1, 2, 3, 4, 5, 6]
+l2 = [10, 20, 30, 40, 50, 60]
+l3 = [100, 200, 300 ]
+tuplelist = list(zip(l1, l2, l3))
+print(tuplelist)
+# Output
+# [(1, 10, 100), (2, 20, 200), (3, 30, 300)]
+
+# Example 3
+tuplelist = list(zip(l1))
+print(tuplelist)
+# Output
+# [(1,), (2,), (3,), (4,), (5,), (6,)]
