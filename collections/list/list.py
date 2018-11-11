@@ -96,6 +96,19 @@ listdict = [
 listdict.sort(key=sort_func, reverse=True)
 print(listdict)
 
+# Pop, pops the element at given index
+colors = ['red', 'green', 'blue', 'cyan', 'magenta', 'yellow']
+print(colors)
+# Removes first item
+colors.pop(0)
+print(colors)
+# Removes last item
+colors.pop(-1)
+print(colors)
+colors.pop()
+# No index, removes last time
+print(colors)
+
 # Initialize a list of size 1 with element as 0 
 nums = [0]
 print('\nArray size 1\n', nums)
