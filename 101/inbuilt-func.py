@@ -101,3 +101,13 @@ tuplelist = list(zip(l1))
 print(tuplelist)
 # Output
 # [(1,), (2,), (3,), (4,), (5,), (6,)]
+
+# str Prints the string
+print('str(1)', str(1))
+print('str(1.0)', str(1.0))
+print('str(\'1\')', str('1'))
+print('str(True)', str(True))
+
+# sum Gets sum of iterable with an option start param
+print('sum([1,2,3,4])', sum([1,2,3,4]))
+print('sum([1,2,3,4], 10)', sum([1,2,3,4], 10))
