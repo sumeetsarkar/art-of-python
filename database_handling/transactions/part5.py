@@ -99,7 +99,7 @@ def transact(options={}):
     return transact_inner
 
 
-@transact(None)
+@transact()
 def create_schema(conn, schemapath):
     """
     DROP/ CREATE schema from file
@@ -110,7 +110,7 @@ def create_schema(conn, schemapath):
         curs.execute(sql)
 
 
-@transact(None)
+@transact()
 def dogfeed(conn, feedpath):
     """
     Inserts seed data to users and accounts table
@@ -292,9 +292,9 @@ if __name__ == '__main__':
         options = os.sys.argv[1: len(os.sys.argv)]
         if options[0] == '--help':
             print("""Usage:
-                python basic.py --help
-                python basic.py
-                python basic.py --flush
+                python part5.py --help
+                python part5.py
+                python part5.py --flush
             """)
             exit()
     main(options)

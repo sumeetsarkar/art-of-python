@@ -162,9 +162,9 @@ if __name__ == '__main__':
         options = os.sys.argv[1: len(os.sys.argv)]
         if options[0] == '--help':
             print("""Usage:
-                python basic.py --help
-                python basic.py
-                python basic.py --flush
+                python part2.py --help
+                python part2.py
+                python part2.py --flush
             """)
             exit()
     main(options)
