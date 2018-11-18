@@ -11,7 +11,6 @@ from contextlib import contextmanager
 from functools import wraps
 from threading import Thread
 
-import psycopg2 as pg
 from psycopg2.pool import ThreadedConnectionPool
 
 
