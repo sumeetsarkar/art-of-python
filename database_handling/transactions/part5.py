@@ -275,7 +275,6 @@ def operation2():
             accountid=1,
             amount=10000,
     )
-    pass
 
 
 def main(options):
