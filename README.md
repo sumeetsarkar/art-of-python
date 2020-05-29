@@ -12,7 +12,7 @@
 - [Decorators](./decorators)
 - [Error Handling](./error_handling)
 - [Event Emitters](./event_emitters)
-- [File Handling](./file_handling)
+- [File Handling](./file-handling)
 - [Generators](./generators)
 - [Globals](./global)
 - [HTTP Examples](./http_examples)
